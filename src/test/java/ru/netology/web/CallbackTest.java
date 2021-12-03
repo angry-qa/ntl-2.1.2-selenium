@@ -1,5 +1,6 @@
 package ru.netology.web;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,10 @@ class CallbackTest {
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "./driver/mac/chromedriver");
+        // System.setProperty("webdriver.chrome.driver", "./driver/mac/chromedriver");
+
+        // Webdriver для разных операционных систем: https://github.com/bonigarcia/webdrivermanager
+        WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -32,9 +36,10 @@ class CallbackTest {
     }
 
     @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
+    void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Test
